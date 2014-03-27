@@ -39,6 +39,8 @@ servers = [
 {name: 'sss-training08', url: 'https://training08.myobadvanced.com/Frames/Login.aspx?ReturnUrl=%2f', method: 'http'},
 {name: 'sss-training09', url: 'https://training09.myobadvanced.com/Frames/Login.aspx?ReturnUrl=%2f', method: 'http'},
 {name: 'sss-training10', url: 'https://training10.myobadvanced.com/Frames/Login.aspx?ReturnUrl=%2f', method: 'http'},
+{name: 'sss-relayA', url: 'https://54.206.111.214:443/ping', method: 'http'},
+{name: 'sss-relayB', url: 'https://54.252.208.125:443/ping', method: 'http'},
 ]
 SCHEDULER.every '1m', :first_in => 0 do |job|
 servers.each do |server|
