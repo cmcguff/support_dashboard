@@ -1,0 +1,16 @@
+ // ----------------------------------------------------------------------------
+// Widget Styles
+// ----------------------------------------------------------------------------
+.widget-server-status-squares {
+  background-color: #12b0c5;
+  vertical-align: top;
+ 
+  .title {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 25px;
+  }
+ 
+  .updated-at {
+    color: rgba(0, 0, 0, 0.3);
+  }
+}
