@@ -29,6 +29,7 @@ ping_count = 10
 #
 servers = [
 {name: 'sss-mystaffinfo', url: 'https://mystaffinfo.myob.com', method: 'http'},
+
 {name: 'sss-training01', url: 'https://training01.myobadvanced.com/Frames/Login.aspx?ReturnUrl=%2f', method: 'http'},
 {name: 'sss-training02', url: 'https://training02.myobadvanced.com/Frames/Login.aspx?ReturnUrl=%2f', method: 'http'},
 {name: 'sss-training03', url: 'https://training03.myobadvanced.com/Frames/Login.aspx?ReturnUrl=%2f', method: 'http'},
@@ -39,6 +40,13 @@ servers = [
 {name: 'sss-training08', url: 'https://training08.myobadvanced.com/Frames/Login.aspx?ReturnUrl=%2f', method: 'http'},
 {name: 'sss-training09', url: 'https://training09.myobadvanced.com/Frames/Login.aspx?ReturnUrl=%2f', method: 'http'},
 {name: 'sss-training10', url: 'https://training10.myobadvanced.com/Frames/Login.aspx?ReturnUrl=%2f', method: 'http'},
+{name: 'sss-training11', url: 'https://training11.myobadvanced.com/Frames/Login.aspx?ReturnUrl=%2f', method: 'http'},
+{name: 'sss-training12', url: 'https://training12.myobadvanced.com/Frames/Login.aspx?ReturnUrl=%2f', method: 'http'},
+{name: 'sss-training13', url: 'https://training13.myobadvanced.com/Frames/Login.aspx?ReturnUrl=%2f', method: 'http'},
+{name: 'sss-training14', url: 'https://training14.myobadvanced.com/Frames/Login.aspx?ReturnUrl=%2f', method: 'http'},
+{name: 'sss-training15', url: 'https://training15.myobadvanced.com/Frames/Login.aspx?ReturnUrl=%2f', method: 'http'},
+{name: 'sss-training16', url: 'https://training16.myobadvanced.com/Frames/Login.aspx?ReturnUrl=%2f', method: 'http'},
+
 {name: 'sss-relayA', url: 'https://54.206.111.214:443/ping', method: 'http'},
 {name: 'sss-relayB', url: 'https://54.252.208.125:443/ping', method: 'http'},
 ]

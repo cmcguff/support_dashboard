@@ -19,6 +19,7 @@ GEM
       thin
       thor
     eventmachine (1.0.3)
+    eventmachine (1.0.3-x86-mingw32)
     execjs (2.0.2)
     hike (1.2.3)
     multi_json (1.8.2)
@@ -56,6 +57,7 @@ GEM
 
 PLATFORMS
   ruby
+  x86-mingw32
 
 DEPENDENCIES
   dashing
