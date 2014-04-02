@@ -5,12 +5,11 @@
 	});
 </script>
  
-<% content_for :title do %>ED Server Status<% end %>
- 
 <div class="gridster">
 <ul>
 <li data-row="1" data-col="1" data-sizex="2" data-sizey="1">
-	<div data-id="welcome" data-view="Text" data-title="ED Server Status" style="background-color: #4b4b4b"></div>
+	<div data-id="welcome" data-view="Text" data-title="ED Server Status" style="background-color: #4b4b4b">
+	</div>
 </li>
 <li data-row="2" data-col="1" data-sizex="2" data-sizey="2">
 	<div data-view="Clock" style="background-color: #4b4b4b"></div>
@@ -36,77 +35,21 @@
 	<div data-id="sss-relayB" data-view="ServerStatusSquares" data-title="EXO Relay Zone B"></div>
 </li>
 
-<!-- Advanced Business -->
-<!-- TRAINING -->
-<li data-row="2" data-col="3" data-sizex="2" data-sizey="1">
-	<div data-id="header-training" data-view="Text" data-title="Advanced Business Training Environments" style="background-color: #3c3c3c"></div>
+<li data-row="1" data-col="6" data-sizex="2" data-sizey="1">
+	<div data-id="header-advanced" data-view="Text" data-title="Advanced Business" style="background-color: #3c3c3c"></div>
 </li>
-<li data-row="2" data-col="5" data-sizex="1" data-sizey="1">
-<div data-id="sss-training01" data-view="ServerStatusSquares" data-title="Training 01"></div>
-</li>
-<li data-row="2" data-col="6" data-sizex="1" data-sizey="1">
-<div data-id="sss-training02" data-view="ServerStatusSquares" data-title="Training 02"></div>
-</li>
-<li data-row="2" data-col="7" data-sizex="1" data-sizey="1">
-<div data-id="sss-training03" data-view="ServerStatusSquares" data-title="Training 03"></div>
-</li>
-<li data-row="2" data-col="8" data-sizex="1" data-sizey="1">
-<div data-id="sss-training04" data-view="ServerStatusSquares" data-title="Training 04"></div>
-</li>
-<li data-row="2" data-col="9" data-sizex="1" data-sizey="1">
-<div data-id="sss-training05" data-view="ServerStatusSquares" data-title="Training 05"></div>
-</li>
-<li data-row="2" data-col="10" data-sizex="1" data-sizey="1">
-<div data-id="sss-training06" data-view="ServerStatusSquares" data-title="Training 06"></div>
-</li>
-<li data-row="3" data-col="3" data-sizex="1" data-sizey="1">
-<div data-id="sss-training07" data-view="ServerStatusSquares" data-title="Training 07"></div>
-</li>
-<li data-row="3" data-col="4" data-sizex="1" data-sizey="1">
-<div data-id="sss-training08" data-view="ServerStatusSquares" data-title="Training 08"></div>
-</li>
-<li data-row="3" data-col="5" data-sizex="1" data-sizey="1">
-<div data-id="sss-training09" data-view="ServerStatusSquares" data-title="Training 09"></div>
-</li>
-<li data-row="3" data-col="6" data-sizex="1" data-sizey="1">
-<div data-id="sss-training10" data-view="ServerStatusSquares" data-title="Training 10"></div>
-</li>
-<li data-row="3" data-col="7" data-sizex="1" data-sizey="1">
-<div data-id="sss-training11" data-view="ServerStatusSquares" data-title="Training 11"></div>
-</li>
-<li data-row="3" data-col="8" data-sizex="1" data-sizey="1">
-<div data-id="sss-training12" data-view="ServerStatusSquares" data-title="Training 12"></div>
-</li>
-<li data-row="3" data-col="9" data-sizex="1" data-sizey="1">
-<div data-id="sss-training13" data-view="ServerStatusSquares" data-title="Training 13"></div>
-</li>
-<li data-row="3" data-col="10" data-sizex="1" data-sizey="1">
-<div data-id="sss-training14" data-view="ServerStatusSquares" data-title="Training 14"></div>
-</li>
-<li data-row="4" data-col="1" data-sizex="1" data-sizey="1">
-<div data-id="sss-training15" data-view="ServerStatusSquares" data-title="Training 15"></div>
-</li>
-<li data-row="4" data-col="2" data-sizex="1" data-sizey="1">
-<div data-id="sss-training16" data-view="ServerStatusSquares" data-title="Training 16"></div>
-</li>
-
-<li data-row="4" data-col="3" data-sizex="2" data-sizey="1">
-	<div data-id="header-beta" data-view="Text" data-title="Advanced Business Beta Environments" style="background-color: #3c3c3c"></div>
-</li>
-
-<li data-row="4" data-col="5" data-sizex="1" data-sizey="1">
-<div data-id="sss-beta01" data-view="ServerStatusSquares" data-title="Beta 01"></div>
-</li>
-<li data-row="4" data-col="6" data-sizex="1" data-sizey="1">
-<div data-id="sss-beta01" data-view="ServerStatusSquares" data-title="Beta 02"></div>
-</li>
+<% for i in 0..24 %>
+	<li data-row="2" data-col="5" data-sizex="1" data-sizey="1">
+		<div data-id="url-status-<%= i %>" data-view="ServerStatusSquares"></div>
+	</li>
+<% end %>
 
 <!-- GRAPHITE SAMPLE -->
 <li data-row="1" data-col="1" data-sizex="2" data-sizey="1">
-<div data-view="Graphite" data-image="http://graphite-web.dev.natasha.myob.co.nz/render?from=-6h&until=now&target=alias(iis-i-51d7b46e_stack-254_dev_natasha_myob_co_nz.memory.total.available_mbytes%2C%27Training%20Available%20Memory%27)&format=png&maxDataPoints=960&width=1872&height=298&bgcolor=1f1f1f&fgcolor=BBBFC2&areaAlpha=0.1&lineWidth=2&yUnitSystem=si&lineMode=connected" data-interval="60000"></div>
+<div data-view="Graphite" data-image="http://graphite-web.dev.natasha.myob.co.nz/render?from=-6h&until=now&target=alias(*stack-254_dev_natasha_myob_co_nz.memory.total.available_mbytes%2C%27Training%20Available%20Memory%27)&format=png&maxDataPoints=960&width=1872&height=298&bgcolor=1f1f1f&fgcolor=BBBFC2&areaAlpha=0.1&lineWidth=2&yUnitSystem=si&lineMode=connected" data-interval="60000"></div>
 </li>
 <li data-row="1" data-col="1" data-sizex="2" data-sizey="1">
-<div data-view="Graphite" data-image="http://graphite-web.dev.natasha.myob.co.nz/render?from=-6h&until=now&target=alias(iis-i-51d7b46e_stack-254_dev_natasha_myob_co_nz.processor._total.%25_processor_time%2C%27Training%20CPU%20%25%27)&format=png&maxDataPoints=960&width=1870&height=250&bgcolor=1f1f1f&fgcolor=BBBFC2&areaAlpha=0.1&lineWidth=2&yMax=100&yUnitSystem=si&lineMode=connected" data-interval="60000"></div>
+<div data-view="Graphite" data-image="http://graphite-web.dev.natasha.myob.co.nz/render?from=-6h&until=now&target=alias(*stack-254_dev_natasha_myob_co_nz.processor._total.%25_processor_time%2C%27Training%20CPU%20%25%27)&format=png&maxDataPoints=960&width=1870&height=250&bgcolor=1f1f1f&fgcolor=BBBFC2&areaAlpha=0.1&lineWidth=2&yMax=100&yUnitSystem=si&lineMode=connected" data-interval="60000"></div>
 </li>
 
 

@@ -1,93 +1,91 @@
 #!/usr/bin/env ruby
 require 'net/http'
 require 'uri'
-#
-### Global Config
-#
-# httptimeout => Number in seconds for HTTP Timeout. Set to ruby default of 60 seconds.
-# ping_count => Number of pings to perform for the ping method
-#
 httptimeout = 60
 ping_count = 10
- 
-#
-# Check whether a server is Responding you can set a server to
-# check via http request or ping
-#
-# Server Options
-# name
-# => The name of the Server Status Tile to Update
-# url
-# => Either a website url or an IP address. Do not include https:// when using ping method.
-# method
-# => http
-# => ping
-#
-# Notes:
-# => If the server you're checking redirects (from http to https for example)
-# the check will return false
-#
-servers = [
-{name: 'sss-mystaffinfo', url: 'https://mystaffinfo.myob.com', method: 'http'},
 
-{name: 'sss-training01', url: 'https://training01.myobadvanced.com/Frames/Login.aspx?ReturnUrl=%2f', method: 'http'},
-{name: 'sss-training02', url: 'https://training02.myobadvanced.com/Frames/Login.aspx?ReturnUrl=%2f', method: 'http'},
-{name: 'sss-training03', url: 'https://training03.myobadvanced.com/Frames/Login.aspx?ReturnUrl=%2f', method: 'http'},
-{name: 'sss-training04', url: 'https://training04.myobadvanced.com/Frames/Login.aspx?ReturnUrl=%2f', method: 'http'},
-{name: 'sss-training05', url: 'https://training05.myobadvanced.com/Frames/Login.aspx?ReturnUrl=%2f', method: 'http'},
-{name: 'sss-training06', url: 'https://training06.myobadvanced.com/Frames/Login.aspx?ReturnUrl=%2f', method: 'http'},
-{name: 'sss-training07', url: 'https://training07.myobadvanced.com/Frames/Login.aspx?ReturnUrl=%2f', method: 'http'},
-{name: 'sss-training08', url: 'https://training08.myobadvanced.com/Frames/Login.aspx?ReturnUrl=%2f', method: 'http'},
-{name: 'sss-training09', url: 'https://training09.myobadvanced.com/Frames/Login.aspx?ReturnUrl=%2f', method: 'http'},
-{name: 'sss-training10', url: 'https://training10.myobadvanced.com/Frames/Login.aspx?ReturnUrl=%2f', method: 'http'},
-{name: 'sss-training11', url: 'https://training11.myobadvanced.com/Frames/Login.aspx?ReturnUrl=%2f', method: 'http'},
-{name: 'sss-training12', url: 'https://training12.myobadvanced.com/Frames/Login.aspx?ReturnUrl=%2f', method: 'http'},
-{name: 'sss-training13', url: 'https://training13.myobadvanced.com/Frames/Login.aspx?ReturnUrl=%2f', method: 'http'},
-{name: 'sss-training14', url: 'https://training14.myobadvanced.com/Frames/Login.aspx?ReturnUrl=%2f', method: 'http'},
-{name: 'sss-training15', url: 'https://training15.myobadvanced.com/Frames/Login.aspx?ReturnUrl=%2f', method: 'http'},
-{name: 'sss-training16', url: 'https://training16.myobadvanced.com/Frames/Login.aspx?ReturnUrl=%2f', method: 'http'},
+# get list of available sites from the API every 30m or so
+apilist = [] 
+SCHEDULER.every '30m', :first_in => 0 do |job|
+	uri = URI.parse('http://restapi.dev.natasha.myob.co.nz/StackWebSites')
+	http = Net::HTTP.new(uri.host, uri.port)
+	http.read_timeout = httptimeout
+	request = Net::HTTP::Get.new(uri.request_uri)
+	response = http.request(request)
+	apilist = []
+	if response.code == "200"
+		JSON.parse(response.body).each do |item|
+			apilist.push({sites: item['WebSiteUrlList'], web_site_version: item['WebSiteVersion'], rds_stack_name: item['RdsStackName'], web_stack_name: item['WebStackName'], web_site_name: item['WebSiteName'] })
+		end
+	end
+end
 
-{name: 'sss-relayA', url: 'https://54.206.111.214:443/ping', method: 'http'},
-{name: 'sss-relayB', url: 'https://54.252.208.125:443/ping', method: 'http'},
-]
+# check status of sites every minute
 SCHEDULER.every '1m', :first_in => 0 do |job|
-servers.each do |server|
-if server[:method] == 'http'
-begin
-uri = URI.parse(server[:url])
-http = Net::HTTP.new(uri.host, uri.port)
-http.read_timeout = httptimeout
-if uri.scheme == "https"
-http.use_ssl=true
-http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-end
-request = Net::HTTP::Get.new(uri.request_uri)
-response = http.request(request)
-if response.code == "200"
-result = 1
-else
-result = 0
-end
-rescue Timeout::Error
-result = 0
-rescue Errno::ETIMEDOUT
-result = 0
-rescue Errno::EHOSTUNREACH
-result = 0
-rescue Errno::ECONNREFUSED
-result = 0
-rescue SocketError => e
-result = 0
-end
-elsif server[:method] == 'ping'
-result = `ping -q -c #{ping_count} #{server[:url]}`
-if ($?.exitstatus == 0)
-result = 1
-else
-result = 0
-end
-end
+	$stdout.puts "Processing list of servers"
+	$stdout.puts apilist.count
+	$stdout.puts apilist
+	servers = [
+		{name: 'sss-mystaffinfo', url: 'https://mystaffinfo.myob.com', method: 'http', web_site_name: 'MyStaffInfo Production'},
+		{name: 'sss-relayA', url: 'https://54.206.111.214:443/ping', method: 'http', web_site_name: 'EXO Relay A'},
+		{name: 'sss-relayB', url: 'https://54.252.208.125:443/ping', method: 'http', web_site_name: 'EXO Relay B'},
+	]
+	apilist.each_with_index do |item, idx|
+		site = item[:sites][0]
+		$stdout.puts site
+		
+		check_prefix = "http://"
+		check_domain = site['DomainName']
+		check_suffix = "/Frames/Login.aspx?ReturnUrl=%2f"
+		check_url = check_prefix + check_domain + check_suffix
+		$stdout.puts check_url
+		
+		status_board = 'url-status-' + idx.to_s
+		$stdout.puts status_board
+
+		webstack = apilist
+
+		servers.push({name: status_board, url: check_url, method: 'http', web_site_name: item[:web_site_name], web_stack_name: item[:web_stack_name], rds_stack_name: item[:rds_stack_name], web_site_version: item[:web_site_version]})
+	end
+
+	servers.each do |server|
+		if server[:method] == 'http'
+			begin
+				uri = URI.parse(server[:url])
+				http = Net::HTTP.new(uri.host, uri.port)
+				http.read_timeout = httptimeout
+				if uri.scheme == "https"
+					http.use_ssl=true
+					http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+				end
+				request = Net::HTTP::Get.new(uri.request_uri)
+				response = http.request(request)
+				if response.code == "200"
+					result = 1
+				else
+					result = 0
+				end
+				rescue Timeout::Error
+					result = 0
+				rescue Errno::ETIMEDOUT
+					result = 0
+				rescue Errno::EHOSTUNREACH
+					result = 0
+				rescue Errno::ECONNREFUSED
+					result = 0
+				rescue SocketError => e
+					result = 0
+			end
+		elsif server[:method] == 'ping'
+			result = `ping -q -c #{ping_count} #{server[:url]}`
+			if ($?.exitstatus == 0)
+				result = 1
+			else
+				result = 0
+			end
+		end
  
-send_event(server[:name], result: result)
-end
+		send_event(server[:name], result: result, web_site_name: server[:web_site_name], web_stack_name: server[:web_stack_name], rds_stack_name: server[:rds_stack_name], web_site_version: server[:web_site_version])
+
+	end
 end
