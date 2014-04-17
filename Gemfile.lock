@@ -21,8 +21,11 @@ GEM
     eventmachine (1.0.3)
     eventmachine (1.0.3-x86-mingw32)
     execjs (2.0.2)
+    faraday (0.8.9)
+      multipart-post (~> 1.2.0)
     hike (1.2.3)
     multi_json (1.8.2)
+    multipart-post (1.2.0)
     rack (1.5.2)
     rack-protection (1.5.2)
       rack
@@ -42,6 +45,8 @@ GEM
       rack-test
       sinatra (~> 1.4.0)
       tilt (~> 1.3)
+    sinatra_cyclist (0.0.3)
+      sinatra
     sprockets (2.10.1)
       hike (~> 1.2)
       multi_json (~> 1.0)
@@ -61,3 +66,5 @@ PLATFORMS
 
 DEPENDENCIES
   dashing
+  faraday
+  sinatra_cyclist

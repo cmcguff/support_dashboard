@@ -3,18 +3,24 @@
 // ----------------------------------------------------------------------------
 $background-color:  #ec663c;
 
-$title-color:       rgba(255, 255, 255, 0.7);
+$title-color:       rgba(255, 255, 255, 1.0);
 $moreinfo-color:    rgba(255, 255, 255, 0.7);
 
 // ----------------------------------------------------------------------------
 // Widget-text styles
 // ----------------------------------------------------------------------------
-.widget-text {
+.widget-on-call {
 
   background-color: $background-color;
 
   .title {
     color: $title-color;
+    font-size: 16px;
+  }
+
+  .text {
+    color: $title-color;
+    font-size: 16px;
   }
 
   .more-info {

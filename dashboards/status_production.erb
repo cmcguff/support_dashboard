@@ -1,0 +1,47 @@
+<script type='text/javascript'>
+	$(function() {
+		Dashing.widget_base_dimensions = [170, 170]
+		Dashing.numColumns = 10
+	});
+</script>
+ 
+<div class="gridster">
+<ul>
+
+<li data-row="1" data-col="1" data-sizex="2" data-sizey="1">
+	<div data-id="welcome" data-view="Text" data-title="Advanced Business" data-text="Production Environment" style="background-color: #4b4b4b">
+	</div>
+</li>
+<li data-row="2" data-col="1" data-sizex="2" data-sizey="2">
+	<div data-view="Clock" style="background-color: #4b4b4b"></div>
+	<i class="icon-time icon-background"></i>
+</li>
+
+<li data-row="1" data-col="3" data-sizex="1" data-sizey="1">
+	<div data-id="on-call" data-view="OnCall" data-title="Who's on call?" data-text=""></div>
+</li>   	
+<li data-row="1" data-col="4" data-sizex="1" data-sizey="1">
+	<div data-id="on-call-tree" data-view="OnCall" data-title="Escalation Tree" data-text=""></div>
+</li>   	
+<li data-row="1" data-col="5" data-sizex="1" data-sizey="1">
+	<div data-id="Manual-triggered" data-view="Hotness" data-title="Archie Events" data-text="New" data-cool="0" data-warm="2"></div>
+</li>
+<li data-row="1" data-col="6" data-sizex="1" data-sizey="1">
+	<div data-id="Manual-acknowledged" data-view="Hotness" data-title="Archie Events" data-text="Fixing" data-cool="0" data-warm="2"></div>
+</li>    
+<li data-row="1" data-col="7" data-sizex="1" data-sizey="1">
+	<div data-id="Natasha-Reimann-triggered" data-view="Hotness" data-title="Internal Events" data-text="New" data-cool="0" data-warm="2"></div>
+</li>
+<li data-row="1" data-col="8" data-sizex="1" data-sizey="1">
+	<div data-id="Natasha-Reimann-acknowledged" data-view="Hotness" data-title="Internal Events" data-text="Fixing" data-cool="0" data-warm="2"></div>
+</li>    
+<li data-row="1" data-col="9" data-sizex="2" data-sizey="1"></li>    
+
+<% for i in (0..Production_Clients-1) %>
+	<li data-row="2" data-col="3" data-sizex="1" data-sizey="1">
+		<div data-id="prod-status-<%= i %>" data-view="ServerStatusSquares"></div>
+	</li>
+<% end %>
+
+</ul>
+</div>
