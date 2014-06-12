@@ -11,11 +11,22 @@ Sinatra::Application::Development_Clients = 0
 Sinatra::Application::Production_Clients = 0
 
 SCHEDULER.every '30m', :first_in => 0 do |job|
-	uri = URI.parse('http://restapi.dev.natasha.myob.co.nz/StackWebSites')
+	$stdout.puts "DEVELOPMENT: Getting list of sites from API"
+	$stdout.puts "DEVELOPMENT: Constructing URI for API server"
+	uri = URI.parse('https://development-restapi.edops.myob.com/stackwebsites')
+	$stdout.puts "DEVELOPMENT: Constructing HTTP object"	
 	http = Net::HTTP.new(uri.host, uri.port)
+	http.use_ssl = true
+	http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+	$stdout.puts "DEVELOPMENT: Setting http timeout"
 	http.read_timeout = httptimeout
+	$stdout.puts "DEVELOPMENT: Construct http request to the API server"
 	request = Net::HTTP::Get.new(uri.request_uri)
+	$stdout.puts "DEVELOPMENT: Start making http request to the API server"
 	response = http.request(request)
+	$stdout.puts "DEVELOPMENT: Completed making http request to the API server"
+	$stdout.puts response.code
+
 	development_apilist = []
 	if response.code == "200"
 		json = JSON.parse(response.body)
@@ -25,11 +36,17 @@ SCHEDULER.every '30m', :first_in => 0 do |job|
 		end
 	end
 
-	uri = URI.parse('http://production-restapi.edops.myob.com/stackwebsites')
+	uri = URI.parse('https://production-restapi.edops.myob.com/stackwebsites')
 	http = Net::HTTP.new(uri.host, uri.port)
+	http.use_ssl = true
+	http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+
 	http.read_timeout = httptimeout
 	request = Net::HTTP::Get.new(uri.request_uri)
 	response = http.request(request)
+	
+	$stdout.puts response.code
+
 	production_apilist =[]
 	if response.code == "200"
 		json = JSON.parse(response.body)
