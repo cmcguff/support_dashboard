@@ -1,0 +1,32 @@
+api_url: "http://10.71.30.38:8080/guestAuth/app/rest/"
+repositories:
+
+ # ROW 1 #
+  Row1_Col1:
+    build_id:
+    branch_id:
+  Row1_Col2: #data-id used in .erb file
+    build_id: bt49
+    branch_id:
+  Row1_Col3:
+    build_id: bt35
+    branch_id:
+  Row1_Col4:
+        build_id: ExoEmployerServices_ExoEmployerServicesAnzQ2201402FullBuild
+        branch_id:
+ # ROW 2 #
+  Row2_Col1:
+    build_id:
+    branch_id:
+  Row2_Col2: #data-id used in .erb file
+    build_id: EmployerServicesAutomation_EXOPayrollAustralia_RegressionGit
+    branch_id:
+  Row2_Col3:
+    build_id: EmployerServicesAutomation_EXOPayrollAustralia_ExoEsAusAllModulesGit
+    branch_id:
+  Row2_Col4:
+        build_id: EmployerServicesAutomation_EXOPayrollNewZealand_ExoNzAllModulesGit
+        branch_id:
+
+
+
